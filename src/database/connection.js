@@ -1,32 +1,21 @@
 import mongoose from "mongoose";
 
-let client;
-export let dbPromise;
-
-const connectDb = async () => {
-	try {
-		if (process.env.NODE_ENV === "development") {
-			// In development mode, use a global variable so that the value
-			// is preserved across module reloads caused by HMR (Hot Module Replacement).
-			if (!global._mongoClientPromise) {
-				console.log("database result is cached");
-				client = await mongoose.connect(process.env.DATABASE_URL);
-				global._mongoClientPromise = client;
-			}
-			dbPromise = global._mongoClientPromise;
-		} else {
-			// In production mode, it's best to not use a global variable.
-			client = await mongoose.connect(process.env.DATABASE_URL);
-			dbPromise = client;
-		}
-		console.log("database is connected successfully");
-		return dbPromise;
-	} catch (err) {
-		console.log("error", err);
+//returns a promise so where are you importing this promise use the await so you can get the object
+let dbPromise;
+if (process.env.NODE_ENV === "development") {
+	// In development mode, use a global variable so that the value
+	// is preserved across module reloads caused by HMR (Hot Module Replacement).
+	if (!global._mongoClientPromise) {
+		console.log("database result is cached");
+		global._mongoClientPromise = mongoose.connect(process.env.DATABASE_URL);
 	}
-};
+	dbPromise = global._mongoClientPromise;
+} else {
+	// In production mode, it's best to not use a global variable.
+	dbPromise = mongoose.connect(process.env.DATABASE_URL);
+}
 
-export default connectDb;
+export default dbPromise;
 
 //if you are using native mongodb client
 

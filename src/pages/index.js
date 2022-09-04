@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const HomePage = () => {
-	return <div>HomePage</div>;
+	useEffect(() => {
+		fetch("")
+		return () => {};
+	}, []);
+
+	return (
+		<>
+			<div>hello</div>
+		</>
+	);
 };
 
 export default HomePage;
