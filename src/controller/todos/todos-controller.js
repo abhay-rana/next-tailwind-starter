@@ -25,13 +25,16 @@ export const getUserById = async (req, res) => {
 export const postUser = async (req, res) => {
 	try {
 		const formData = JSON.parse(req.body);
-
+		console.log(formData);
 		if (!formData) return res.status(404).json({ error: "Form data not set" });
 		await Todo.create(formData, (err, data) => {
-			return res.status(200).json(data);
+			console.log(err);
+			console.log("users created", data);
+			return res.status(200).send("user is successfully created");
 		});
 	} catch (err) {
 		console.log(err);
+		return res.status(400).send("user cant save due to the server error");
 	}
 };
 
@@ -74,11 +77,12 @@ export const deleteUser = async (req, res) => {
 		const { userId } = req.query;
 		if (userId) {
 			await Todo.findByIdAndDelete(userId);
-			return res.status(200).json({ deleted: userId });
+			console.log("user is deleted");
+			return res.status(200).send("user is successfully deleted");
 		} else {
-			return res.status(404).json({ error: "User is not selected" });
+			return res.status(404).send("User is not selected");
 		}
 	} catch (err) {
-		return res.status(404).json({ error: "Error while deleting the user" });
+		return res.status(404).send("Error while deleting the user");
 	}
 };
