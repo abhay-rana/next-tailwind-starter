@@ -3,7 +3,7 @@
 		"baseUrl": "./src",
 		"paths": {
 			"~/*": ["*"],
-			"~/api/*": ["pages/api/*"], 
+			"~/api/*": ["pages/api/*"],
 			"~/components/*": ["pages/components/*"]
 		}
 	}
