@@ -24,7 +24,7 @@ export const getUserById = async (req, res) => {
 //post request -> To Create A New Record
 export const postUser = async (req, res) => {
 	try {
-		const formData = req.body;
+		const formData = JSON.parse(req.body);
 
 		if (!formData) return res.status(404).json({ error: "Form data not set" });
 		await Todo.create(formData, (err, data) => {
