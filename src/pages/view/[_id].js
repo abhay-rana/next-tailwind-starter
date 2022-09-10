@@ -4,24 +4,23 @@ import { useRouter } from "next/router";
 const View = ({ _id, ...props }) => {
 	const router = useRouter();
 	const [todo, setTodo] = useState({});
+
 	useEffect(() => {
 		fetch(`${process.env.NEXT_PUBLIC_PROJECT_URL}/api/todos/${_id}`)
 			.then((res) => (res.ok ? res.json() : Promise.reject(res)))
 			.then((data) => setTodo(data))
 			.catch((err) => err.text().then((data) => console.log(data)));
-
-		return () => {};
 	}, []);
-
-	const changeTodo = (name, value) => {
-		setTodo({ ...todo, [name]: value });
-	};
 
 	const update = () => {
 		fetch(`${process.env.NEXT_PUBLIC_PROJECT_URL}/api/todos/${_id}`, { method: "PUT", body: JSON.stringify(todo) })
 			.then((res) => (res.ok ? res.json() : Promise.reject(res)))
 			.then((data) => console.log(data))
 			.catch((err) => err.text().then((data) => console.log(data)));
+	};
+
+	const changeTodo = (name, value) => {
+		setTodo({ ...todo, [name]: value });
 	};
 
 	return (
